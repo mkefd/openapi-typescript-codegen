@@ -45,6 +45,7 @@ export const getOperation = (
         errors: [],
         results: [],
         responseHeader: null,
+        hasDefault: false
     };
 
     // Parse the operation parameters (path, query, body, etc).
@@ -58,6 +59,7 @@ export const getOperation = (
         operation.parametersHeader.push(...parameters.parametersHeader);
         operation.parametersCookie.push(...parameters.parametersCookie);
         operation.parametersBody = parameters.parametersBody;
+        operation.hasDefault = parameters.hasDefault
     }
 
     if (op.requestBody) {

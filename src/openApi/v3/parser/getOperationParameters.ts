@@ -14,12 +14,16 @@ export const getOperationParameters = (openApi: OpenApi, parameters: OpenApiPara
         parametersCookie: [],
         parametersHeader: [],
         parametersBody: null, // Not used in V3 -> @see requestBody
+        hasDefault: false
     };
 
     // Iterate over the parameters
     parameters.forEach(parameterOrReference => {
         const parameterDef = getRef<OpenApiParameter>(openApi, parameterOrReference);
         const parameter = getOperationParameter(openApi, parameterDef);
+
+        // At least one parameter has default value
+        operationParameters.hasDefault ||= parameter.default !== undefined;
 
         // We ignore the "api-version" param, since we do not want to add this
         // as the first / default parameter for each of the service calls.
