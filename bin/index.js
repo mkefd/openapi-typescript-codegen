@@ -28,8 +28,13 @@ const params = program
     .opts();
 
 if (params.client === 'mappersmith' && params.name === undefined) {
-    console.error('Error: --name option is required for mappersmith client');
+    console.error('ERROR: --name option is required for mappersmith client');
     process.exit(1);
+}
+
+if (params.client === 'mappersmith') {
+    console.log('INFO: --exportServices is forced to be false mappersmith client');
+    params.exportServices = false;
 }
 
 const OpenAPI = require(path.resolve(__dirname, '../dist/index.js'));
