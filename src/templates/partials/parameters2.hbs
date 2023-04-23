@@ -1,19 +1,8 @@
 {{#if parameters}}
-	{
+	params{{#if hasDefault}}?{{/if}}: {
 	{{#each parameters}}
 		{{{name}}}{{>isRequired}}: {{>type}},
 	{{/each}}
 	}
-	{{#if hasDefault}}
-		= {
-		{{#each parameters}}
-			{{#if default}}
-				{{{name}}}: {{{default}}},
-			{{/if}}
-		{{/each}}
-		}
-	{{/if}}
-{{else}}
-	{}
 {{/if}}
 

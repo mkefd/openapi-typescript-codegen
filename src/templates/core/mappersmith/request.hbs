@@ -25,7 +25,7 @@ export type {{{clientName}}}Client = {
 {{#each services}}
 	{{name}}: {
 	{{#each operations}}
-		{{name}}: (params: {{>parameters2}}) => Promise<Response<{{>result}}>>,
+		{{name}}: ({{>parameters2}}) => Promise<Response<{{>result}}>>,
 	{{/each}}
 	},
 {{/each}}
@@ -47,7 +47,13 @@ export const {{{camelCase clientName}}}MappersmithClientFactory = ({
 		{{#each services}}
 			{{name}}: {
 			{{#each operations}}
-				{{name}}: { method: '{{method}}', path: '{{path}}', bodyAttr: 'requestBody' },
+				{{name}}: { method: '{{method}}', path: '{{path}}', bodyAttr: 'requestBody' {{#if hasDefault}}, params: {
+				{{#each parameters}}
+					{{#if default}}
+						{{{name}}}: {{{default}}},
+					{{/if}}
+				{{/each}}
+				}{{/if}} },
 			{{/each}}
 			},
 		{{/each}}
