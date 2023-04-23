@@ -1,19 +1,38 @@
-import forge, { Client } from 'mappersmith';
+import forge, { Response } from 'mappersmith';
+{{!--import forge, { Client, Response } from 'mappersmith';--}}
+{{#each services}}
+{{#if imports}}
+	{{#each imports}}
+		import type { {{{this}}} } from '../models/{{{this}}}';
+	{{/each}}
+{{/if}}
+{{/each}}
+{{!----}}
+{{!--export type {{{clientName}}}Resource = {--}}
+{{!--{{#each services}}--}}
+{{!--	{{name}}: {--}}
+{{!--	{{#each operations}}--}}
+{{!--		{{name}}: {--}}
+{{!--			method: '{{method}}';--}}
+{{!--			path: '{{path}}';--}}
+{{!--		};--}}
+{{!--	{{/each}}--}}
+{{!--	};--}}
+{{!--{{/each}}--}}
+{{!--};--}}
 
-export type {{{clientName}}}Resource = {
+export type {{{clientName}}}Client = {
 {{#each services}}
 	{{name}}: {
 	{{#each operations}}
-		{{name}}: {
-			method: '{{method}}';
-			path: '{{path}}';
-		};
+		{{name}}: (params: { {{>parameters}} }) => Promise<Response<{{>result}}>>,
 	{{/each}}
-	};
+	},
 {{/each}}
 };
 
-export const {{{camelCase clientName}}}MappersmithClientFactory = (host: string): Client<{{{clientName}}}Resource> =>
+{{!--export const {{{camelCase clientName}}}MappersmithClientFactory = (host: string): Client<{{{clientName}}}Resource> =>--}}
+export const {{{camelCase clientName}}}MappersmithClientFactory = (host: string) =>
 	forge({
 		clientId: '{{clientName}}',
 		host,
@@ -21,9 +40,9 @@ export const {{{camelCase clientName}}}MappersmithClientFactory = (host: string)
 		{{#each services}}
 			{{name}}: {
 			{{#each operations}}
-				{{name}}: { method: '{{method}}', path: '{{path}}' },
+				{{name}}: { method: '{{method}}', path: '{{path}}', bodyAttr: 'requestBody' },
 			{{/each}}
 			},
 		{{/each}}
 		},
-	});
+	}) as {{{clientName}}}Client;
