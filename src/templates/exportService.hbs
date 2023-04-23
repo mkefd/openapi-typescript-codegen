@@ -86,10 +86,20 @@ export class {{{name}}}{{{@root.postfix}}} {
 	{{#equals @root.httpClient 'mappersmith'}}
 		public async {{{name}}}({{>parameters}}): Promise<{{>result}}> {
 			return (await this.mappersmithClient.{{{../name}}}.{{{name}}}(
-		{{#if parametersPath}}
-			{ {{#each parametersPath}}"{{prop}}": {{name}},{{/each}} }
-		{{/if}}
-		{{#if parametersBody}}{{#if parametersPath}},{{/if}}{{parametersBody.name}}{{/if}}
+		{{#if parameters}} { {{/if}}
+				{{#if parametersPath}}{{#each parametersPath}}"{{prop}}": {{name}},{{/each}}{{/if}}
+				{{#each parametersQuery}}
+						'{{{prop}}}': {{{name}}},
+				{{/each}}
+				{{#if parametersBody}}body: {{parametersBody.name}}{{/if}}
+				{{#if parametersHeader}}
+						headers: {
+					{{#each parametersHeader}}
+							'{{{prop}}}': {{{name}}},
+					{{/each}}
+						},
+				{{/if}}
+		{{#if parameters}} } {{/if}}
 		)).data()
 		}
 	{{else}}
