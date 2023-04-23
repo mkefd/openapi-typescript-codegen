@@ -32,7 +32,13 @@ export type {{{clientName}}}Client = {
 };
 
 {{!--export const {{{camelCase clientName}}}MappersmithClientFactory = (host: string): Client<{{{clientName}}}Resource> =>--}}
-export const {{{camelCase clientName}}}MappersmithClientFactory = (host: string, middleware?: Middleware[]) =>
+export const {{{camelCase clientName}}}MappersmithClientFactory = ({
+	host,
+	middleware
+}: {
+	host: string,
+	middleware?: Middleware[]
+}) =>
 	forge({
 		clientId: '{{clientName}}',
 		host,
