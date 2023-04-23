@@ -1,4 +1,11 @@
 {{#if parameters}}
+	{{#if hasDefault}}
+		{{#each parameters}}
+			{{#if default}}
+				// [params.{{{name}}}={{{default}}}]
+			{{/if}}
+		{{/each}}
+	{{/if}}
 	params{{#if hasDefault}}?{{/if}}: {
 	{{#each parameters}}
 		{{{name}}}{{>isRequired}}: {{>type}},
