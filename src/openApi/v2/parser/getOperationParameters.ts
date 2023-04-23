@@ -14,6 +14,7 @@ export const getOperationParameters = (openApi: OpenApi, parameters: OpenApiPara
         parametersCookie: [],
         parametersHeader: [],
         parametersBody: null,
+        hasDefault: false
     };
 
     // Iterate over the parameters
