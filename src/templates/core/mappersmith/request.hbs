@@ -1,0 +1,29 @@
+import forge, { Client } from 'mappersmith';
+
+export type {{{clientName}}}Resource = {
+{{#each services}}
+	{{name}}: {
+	{{#each operations}}
+		{{name}}: {
+			method: string;
+			path: string;
+		};
+	{{/each}}
+	};
+{{/each}}
+};
+
+export const {{{camelCase clientName}}}MappersmithClientFactory = (host: string): Client<{{{clientName}}}Resource> =>
+	forge({
+		clientId: '{{clientName}}',
+		host,
+		resources: {
+		{{#each services}}
+			{{name}}: {
+			{{#each operations}}
+				{{name}}: { method: '{{method}}', path: '{{path}}' },
+			{{/each}}
+			},
+		{{/each}}
+		},
+	});

@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 
 import type { Client } from '../client/interfaces/Client';
-import type { HttpClient } from '../HttpClient';
+import { HttpClient } from '../HttpClient';
 import type { Indent } from '../Indent';
 import { mkdir, rmdir } from './fileSystem';
 import { isDefined } from './isDefined';
@@ -94,7 +94,7 @@ export const writeClient = async (
         await writeClientModels(client.models, templates, outputPathModels, httpClient, useUnionTypes, indent);
     }
 
-    if (isDefined(clientName)) {
+    if (isDefined(clientName) && httpClient !== HttpClient.MAPPERSMITH) {
         await mkdir(outputPath);
         await writeClientClass(client, templates, outputPath, httpClient, clientName, indent, postfixServices);
     }
@@ -112,7 +112,8 @@ export const writeClient = async (
             exportSchemas,
             postfixServices,
             postfixModels,
-            clientName
+            clientName,
+            httpClient
         );
     }
 };

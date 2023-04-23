@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 
 import type { Service } from '../client/interfaces/Service';
-import type { HttpClient } from '../HttpClient';
+import { HttpClient } from '../HttpClient';
 import type { Indent } from '../Indent';
 import { writeFile } from './fileSystem';
 import { formatCode as f } from './formatCode';
@@ -40,7 +40,8 @@ export const writeClientServices = async (
             useUnionTypes,
             useOptions,
             postfix,
-            exportClient: isDefined(clientName),
+            exportClient: isDefined(clientName) && httpClient !== HttpClient.MAPPERSMITH,
+            clientName,
         });
         await writeFile(file, i(f(templateResult), indent));
     }

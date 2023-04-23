@@ -108,6 +108,7 @@
         "glob": "10.2.1",
         "jest": "29.5.0",
         "jest-cli": "29.5.0",
+        "mappersmith": "^2.38.1",
         "node-fetch": "2.6.9",
         "prettier": "2.8.7",
         "puppeteer": "19.10.1",
@@ -121,7 +122,7 @@
         "typescript": "4.9.5",
         "zone.js": "0.13.0"
     },
-    "overrides" : {
+    "overrides": {
         "node-fetch": "2.6.9",
         "rollup": "3.20.2",
         "typescript": "4.9.5"

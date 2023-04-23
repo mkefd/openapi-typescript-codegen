@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 
 import type { Client } from '../client/interfaces/Client';
-import type { HttpClient } from '../HttpClient';
+import { HttpClient } from '../HttpClient';
 import type { Indent } from '../Indent';
 import { copyFile, exists, writeFile } from './fileSystem';
 import { formatIndentation as i } from './formatIndentation';
@@ -35,6 +35,7 @@ export const writeClientCore = async (
         httpRequest,
         server: client.server,
         version: client.version,
+        services: client.services,
     };
 
     await writeFile(resolve(outputPath, 'OpenAPI.ts'), i(templates.core.settings(context), indent));
@@ -44,7 +45,7 @@ export const writeClientCore = async (
     await writeFile(resolve(outputPath, 'CancelablePromise.ts'), i(templates.core.cancelablePromise(context), indent));
     await writeFile(resolve(outputPath, 'request.ts'), i(templates.core.request(context), indent));
 
-    if (isDefined(clientName)) {
+    if (isDefined(clientName) && httpClient !== HttpClient.MAPPERSMITH) {
         await writeFile(resolve(outputPath, 'BaseHttpRequest.ts'), i(templates.core.baseHttpRequest(context), indent));
         await writeFile(resolve(outputPath, `${httpRequest}.ts`), i(templates.core.httpRequest(context), indent));
     }

@@ -38,6 +38,7 @@ import functionIsStringWithValue from '../templates/core/functions/isStringWithV
 import functionIsSuccess from '../templates/core/functions/isSuccess.hbs';
 import functionResolve from '../templates/core/functions/resolve.hbs';
 import templateCoreHttpRequest from '../templates/core/HttpRequest.hbs';
+import mappersmithRequest from '../templates/core/mappersmith/request.hbs';
 import nodeGetHeaders from '../templates/core/node/getHeaders.hbs';
 import nodeGetRequestBody from '../templates/core/node/getRequestBody.hbs';
 import nodeGetResponseBody from '../templates/core/node/getResponseBody.hbs';
@@ -219,6 +220,9 @@ export const registerHandlebarTemplates = (root: {
     Handlebars.registerPartial('angular/getResponseHeader', Handlebars.template(angularGetResponseHeader));
     Handlebars.registerPartial('angular/sendRequest', Handlebars.template(angularSendRequest));
     Handlebars.registerPartial('angular/request', Handlebars.template(angularRequest));
+
+    // Specific files for the mappersmith client implementation
+    Handlebars.registerPartial('mappersmith/request', Handlebars.template(mappersmithRequest));
 
     return templates;
 };

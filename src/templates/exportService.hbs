@@ -17,6 +17,10 @@ import type { {{{this}}} } from '../models/{{{this}}}';
 {{/each}}
 
 {{/if}}
+{{#equals @root.httpClient 'mappersmith'}}
+import { Client } from 'mappersmith'
+import type { {{{clientName}}}Resource } from '../core/request';
+{{else}}
 {{#notEquals @root.httpClient 'angular'}}
 import type { CancelablePromise } from '../core/CancelablePromise';
 {{/notEquals}}
@@ -30,6 +34,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 {{/if}}
+{{/equals}}
 
 {{#equals @root.httpClient 'angular'}}
 @Injectable({
@@ -37,6 +42,13 @@ import { request as __request } from '../core/request';
 })
 {{/equals}}
 export class {{{name}}}{{{@root.postfix}}} {
+	{{#equals @root.httpClient 'mappersmith'}}
+	private mappersmithClient: Client<{{{clientName}}}Resource>
+
+	constructor(mappersmithClient: Client<{{{clientName}}}Resource>) {
+		this.mappersmithClient = mappersmithClient
+	}
+	{{else}}
 	{{#if @root.exportClient}}
 
 	constructor(public readonly httpRequest: BaseHttpRequest) {}
@@ -46,6 +58,7 @@ export class {{{name}}}{{{@root.postfix}}} {
 	constructor(public readonly http: HttpClient) {}
 	{{/equals}}
 	{{/if}}
+	{{/equals}}
 
 	{{#each operations}}
 	/**
@@ -70,6 +83,16 @@ export class {{{name}}}{{{@root.postfix}}} {
 	{{/each}}
 	 * @throws ApiError
 	 */
+	{{#equals @root.httpClient 'mappersmith'}}
+		public async {{{name}}}({{>parameters}}): Promise<{{>result}}> {
+			return (await this.mappersmithClient.{{{../name}}}.{{{name}}}(
+		{{#if parametersPath}}
+			{ {{#each parametersPath}}"{{prop}}": {{name}},{{/each}} }
+		{{/if}}
+		{{#if parametersBody}}{{#if parametersPath}},{{/if}}{{parametersBody.name}}{{/if}}
+		)).data()
+		}
+	{{else}}
 	{{#if @root.exportClient}}
 	{{#equals @root.httpClient 'angular'}}
 	public {{{name}}}({{>parameters}}): Observable<{{>result}}> {
@@ -148,5 +171,6 @@ export class {{{name}}}{{{@root.postfix}}} {
 		});
 	}
 
+	{{/equals}}
 	{{/each}}
 }
