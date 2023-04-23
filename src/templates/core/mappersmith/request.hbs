@@ -41,13 +41,14 @@ export const {{{camelCase clientName}}}MappersmithClientFactory = ({
 }) =>
 	forge({
 		clientId: '{{clientName}}',
+		bodyAttr: 'requestBody',
 		host,
 		middleware,
 		resources: {
 		{{#each services}}
 			{{name}}: {
 			{{#each operations}}
-				{{name}}: { method: '{{method}}', path: '{{path}}', bodyAttr: 'requestBody' {{#if hasDefault}}, params: {
+				{{name}}: { method: '{{method}}', path: '{{path}}'{{#if hasDefault}}, params: {
 				{{#each parameters}}
 					{{#if default}}
 						{{{name}}}: {{{default}}},
