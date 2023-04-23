@@ -1,0 +1,8 @@
+{{#if parameters}} {
+{{#each parameters}}
+{{{name}}}{{>isRequired}}: {{>type}},
+{{/each}} } {{else}} {} {{/if}}
+{{!--= { {{#each parameters}}--}}
+{{!--{{#if default}}{{{name}}}: {{{default}}},{{/if}}--}}
+{{!--{{/each}} } --}}
+
