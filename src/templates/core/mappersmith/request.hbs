@@ -25,6 +25,27 @@ export type {{{clientName}}}Client = {
 {{#each services}}
 	{{name}}: {
 	{{#each operations}}
+		/**
+		{{#if deprecated}}
+			* @deprecated
+		{{/if}}
+		{{#if summary}}
+			* {{{escapeComment summary}}}
+		{{/if}}
+		{{#if description}}
+			* {{{escapeComment description}}}
+		{{/if}}
+		{{#if parameters}}
+			* @param {Object} {{#if hasDefault}}[{{/if}}params{{#if hasDefault}}]{{/if}} - Request parameters.
+			{{#each parameters}}
+				* @param { {{>type}} } {{#if default}}[{{/if}}params.{{{name}}}{{#if default}}={{default}}]{{/if}} {{#if description}}{{{escapeComment description}}}{{/if}}
+			{{/each}}
+		{{/if}}
+		{{#each results}}
+			* @returns {{{type}}} {{#if description}}{{{escapeComment description}}}{{/if}}
+		{{/each}}
+		* @throws ApiError
+		*/
 		{{name}}: ({{>parameters2}}) => Promise<Response<{{>result}}>>,
 	{{/each}}
 	},
