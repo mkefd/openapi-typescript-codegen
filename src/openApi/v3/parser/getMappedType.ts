@@ -17,7 +17,7 @@ const TYPE_MAPPINGS = new Map<string, string>([
     ['date-time', 'string'],
     ['password', 'string'],
     ['string', 'string'],
-    ['void', 'void'],
+    ['void', 'null'],
     ['null', 'null'],
 ]);
 
