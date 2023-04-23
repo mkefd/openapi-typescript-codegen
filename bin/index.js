@@ -33,7 +33,7 @@ if (params.client === 'mappersmith' && params.name === undefined) {
 }
 
 if (params.client === 'mappersmith') {
-    console.log('INFO: --exportServices is forced to be false mappersmith client');
+    console.log('INFO: --exportServices option is forced to be false for mappersmith client');
     params.exportServices = false;
 }
 

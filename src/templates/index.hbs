@@ -4,6 +4,8 @@
 export { {{{clientName}}} } from './{{{clientName}}}';
 
 {{/if}}
+{{#equals @root.httpClient 'mappersmith'}}
+{{else}}
 {{#if @root.exportCore}}
 export { ApiError } from './core/ApiError';
 {{#if @root.exportClient}}
@@ -13,6 +15,7 @@ export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 {{/if}}
+{{/equals}}
 {{#if @root.exportModels}}
 {{#if models}}
 
@@ -45,3 +48,8 @@ export { {{{name}}}{{{@root.postfixServices}}} } from './services/{{{name}}}{{{@
 {{/each}}
 {{/if}}
 {{/if}}
+
+{{#equals @root.httpClient 'mappersmith'}}
+export type { {{clientName}}MappersmithClient } from './core/request';
+export { {{{camelCase clientName}}}MappersmithClientFactory } from './core/request';
+{{/equals}}

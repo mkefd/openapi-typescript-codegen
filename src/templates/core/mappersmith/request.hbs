@@ -1,5 +1,7 @@
+{{>header}}
+
+
 import forge, { Middleware, Response } from 'mappersmith';
-{{!--import forge, { Client, Response } from 'mappersmith';--}}
 {{#each services}}
 {{#if imports}}
 	{{#each imports}}
@@ -7,21 +9,8 @@ import forge, { Middleware, Response } from 'mappersmith';
 	{{/each}}
 {{/if}}
 {{/each}}
-{{!----}}
-{{!--export type {{{clientName}}}Resource = {--}}
-{{!--{{#each services}}--}}
-{{!--	{{name}}: {--}}
-{{!--	{{#each operations}}--}}
-{{!--		{{name}}: {--}}
-{{!--			method: '{{method}}';--}}
-{{!--			path: '{{path}}';--}}
-{{!--		};--}}
-{{!--	{{/each}}--}}
-{{!--	};--}}
-{{!--{{/each}}--}}
-{{!--};--}}
 
-export type {{{clientName}}}Client = {
+export type {{{clientName}}}MappersmithClient = {
 {{#each services}}
 	{{name}}: {
 	{{#each operations}}
@@ -79,4 +68,4 @@ export const {{{camelCase clientName}}}MappersmithClientFactory = ({
 			},
 		{{/each}}
 		},
-	}) as {{{clientName}}}Client;
+	}) as {{{clientName}}}MappersmithClient;

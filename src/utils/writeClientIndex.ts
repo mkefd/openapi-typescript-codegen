@@ -53,6 +53,7 @@ export const writeClientIndex = async (
         models: sortModelsByName(client.models),
         services: sortServicesByName(client.services),
         exportClient: isDefined(clientName) && httpClient !== HttpClient.MAPPERSMITH,
+        httpClient,
     });
 
     await writeFile(resolve(outputPath, 'index.ts'), templateResult);
