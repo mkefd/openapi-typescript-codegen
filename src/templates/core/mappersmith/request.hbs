@@ -5,8 +5,8 @@ export type {{{clientName}}}Resource = {
 	{{name}}: {
 	{{#each operations}}
 		{{name}}: {
-			method: string;
-			path: string;
+			method: '{{method}}';
+			path: '{{path}}';
 		};
 	{{/each}}
 	};
